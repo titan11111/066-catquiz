@@ -486,6 +486,7 @@
                     <button class="level-btn" data-level="3">レベル3 🌟🌟🌟</button>
                     <button class="level-btn" data-level="4">レベル4 🌟🌟🌟🌟</button>
                     <button class="level-btn" data-level="5">レベル5 🌟🌟🌟🌟🌟</button>
+                    <button class="level-btn" data-level="6">レベルMAX 🔥</button>
                 </div>
             </div>
         </div>
@@ -559,6 +560,9 @@
     </div>
 
     <script>
+        const MAX_GAME_LEVEL = 6;
+        const MAX_CAT_LEVEL = 6;
+
         // ゲームの状態管理
         let gameState = {
             currentLevel: 1,
@@ -579,7 +583,8 @@
             2: { emoji: '😸', name: 'えがおねこ', message: 'うれしいにゃ！' },
             3: { emoji: '😻', name: 'らぶりーねこ', message: 'だいすきにゃ！' },
             4: { emoji: '🤩', name: 'すたーねこ', message: 'すごいにゃ！' },
-            5: { emoji: '👑', name: 'おうさまねこ', message: 'さいこうにゃ！' }
+            5: { emoji: '👑', name: 'おうさまねこ', message: 'さいこうにゃ！' },
+            6: { emoji: '🌠', name: 'でんせつねこ', message: '伝説級だにゃ！' }
         };
 
         // クイズ問題データベース
@@ -643,6 +648,23 @@
                 { question: '猫の品種「ベンガル」の血統に含まれる野生猫は？', options: ['ライオン', 'ベンガルヤマネコ', 'チーター', 'ピューマ'], correct: 1 },
                 { question: '猫が「マーキング」で使う体の部位はいくつあるでしょう？', options: ['1つ', '3つ', '5つ', '7つ以上'], correct: 3 },
                 { question: '猫の「キャットニップ」への反応は何によるものでしょう？', options: ['味', '匂い成分', '食感', '色'], correct: 1 }
+            ],
+            6: [ // レベルMAX - 日本猫マニアック
+                { question: '宇多天皇が日記「寛平御記」で寵愛した黒猫に与えた称号は？', options: ['命婦御前', '五位殿', '宰相殿', '猫少将'], correct: 0 },
+                { question: '尾曲がり猫の出現率が国内で特に高いとして自治体もPRしている県は？', options: ['長崎県', '岐阜県', '北海道', '富山県'], correct: 0 },
+                { question: '宮城県石巻市田代島で漁師たちが猫を祀る社の正式名称は？', options: ['猫神社', '招猫宮', '猫稲荷社', '田代招福堂'], correct: 0 },
+                { question: '江戸幕府が正徳年間に猫の放し飼いを奨励した主な目的は？', options: ['蚕を鼠から守るため', '病を鎮めるため', '犬の数を減らすため', '祭礼で使うため'], correct: 0 },
+                { question: '招き猫発祥の地として広く知られる世田谷区の寺院は？', options: ['豪徳寺', '今戸神社', '浅草寺', '延命寺'], correct: 0 },
+                { question: 'オスの三毛猫が生まれる確率はおよそどのくらいと言われている？', options: ['約3万匹に1匹', '約300匹に1匹', '約30匹に1匹', '約3匹に1匹'], correct: 0 },
+                { question: 'ジャパニーズボブテイルの短い尻尾を生む遺伝子は？', options: ['優性遺伝子', '劣性遺伝子', '伴性劣性遺伝子', '突然変異のみ'], correct: 0 },
+                { question: 'ジャパニーズボブテイル短毛種がCFAでチャンピオンシップ認定を受けた年は？', options: ['1976年', '1963年', '1984年', '1995年'], correct: 0 },
+                { question: '和歌山電鉄貴志駅の三毛猫「たま」が晩年に授与された肩書は？', options: ['ウルトラ駅長', '総合駅長', '特別名誉車掌', '地域長官'], correct: 0 },
+                { question: 'イリオモテヤマネコが学術的に新種として発表されたのはいつ？', options: ['1965年', '1945年', '1978年', '1988年'], correct: 0 },
+                { question: 'ツシマヤマネコが地元で呼ばれる伝統的な愛称は？', options: ['ヤマピカリャー', 'ネコサマ', 'コヤマネコ', 'トラネコウ'], correct: 0 },
+                { question: '広島県尾道市の「猫の細道」で路傍に並ぶ縁起物として有名なのは？', options: ['福石猫', '土鈴猫', '張子猫', 'こけし猫'], correct: 0 },
+                { question: '日本固有の野生ネコ科動物の組み合わせとして正しいのは？', options: ['イリオモテヤマネコとツシマヤマネコ', 'ツシマヤマネコとベンガルヤマネコ', 'イリオモテヤマネコとスナネコ', 'スナネコとジャコウネコ'], correct: 0 },
+                { question: '福井県越前市で「猫寺」として知られ多数の保護猫が暮らす寺院は？', options: ['御誕生寺', '長泉寺', '雲龍寺', '法華寺'], correct: 0 },
+                { question: '愛媛県の多頭飼育で知られる猫島・青島で島民が猫に与える主食として伝統的に使われてきたものは？', options: ['釣った小魚', '米ぬかのお粥', '乾いた鶏肉', '芋ようかん'], correct: 0 }
             ]
         };
 
@@ -682,7 +704,7 @@
 
             // 結果画面のボタン
             document.getElementById('nextLevelBtn').addEventListener('click', function() {
-                if (gameState.currentLevel < 5) {
+                if (gameState.currentLevel < MAX_GAME_LEVEL) {
                     startGame(gameState.currentLevel + 1);
                 } else {
                     showScreen('startScreen');
@@ -712,6 +734,7 @@
             gameState.correctAnswers = 0;
             gameState.timeLeft = 30;
             gameState.questions = [...quizDatabase[level]].sort(() => Math.random() - 0.5);
+            gameState.totalQuestions = gameState.questions.length;
 
             updateGameDisplay();
             showScreen('gameScreen');
@@ -720,11 +743,14 @@
         }
 
         function updateGameDisplay() {
-            document.getElementById('currentLevel').textContent = `レベル ${gameState.currentLevel}`;
-            document.getElementById('questionNumber').textContent = `問題 ${gameState.currentQuestion + 1}/${gameState.totalQuestions}`;
+            const levelLabel = gameState.currentLevel === MAX_GAME_LEVEL ? 'レベル MAX' : `レベル ${gameState.currentLevel}`;
+            const displayedQuestionNumber = Math.min(gameState.currentQuestion + 1, gameState.totalQuestions);
+
+            document.getElementById('currentLevel').textContent = levelLabel;
+            document.getElementById('questionNumber').textContent = `問題 ${displayedQuestionNumber}/${gameState.totalQuestions}`;
             document.getElementById('score').textContent = `スコア: ${gameState.score}`;
-            
-            const progress = (gameState.currentQuestion / gameState.totalQuestions) * 100;
+
+            const progress = gameState.totalQuestions > 0 ? (gameState.currentQuestion / gameState.totalQuestions) * 100 : 0;
             document.getElementById('progress').style.width = `${progress}%`;
 
             updateCatStatus();
@@ -878,7 +904,7 @@
             const currentCat = catEvolutions[gameState.catLevel];
             catDisplay.textContent = currentCat.emoji;
             catName.textContent = currentCat.name;
-            catLevel.textContent = `レベル: ${gameState.catLevel}`;
+            catLevel.textContent = gameState.catLevel >= MAX_CAT_LEVEL ? 'レベル: MAX' : `レベル: ${gameState.catLevel}`;
         }
 
         function endGame() {
@@ -889,7 +915,7 @@
             const oldCatLevel = gameState.catLevel;
             
             if (accuracy >= 0.8) {
-                gameState.catLevel = Math.min(gameState.catLevel + 1, 5);
+                gameState.catLevel = Math.min(gameState.catLevel + 1, MAX_CAT_LEVEL);
             } else if (accuracy >= 0.6) {
                 // レベル維持
             } else {
@@ -947,11 +973,13 @@
 
             // 次のレベルボタンの表示制御
             const nextLevelBtn = document.getElementById('nextLevelBtn');
-            if (gameState.currentLevel < 5 && accuracy >= 60) {
+            if (gameState.currentLevel < MAX_GAME_LEVEL && accuracy >= 60) {
                 nextLevelBtn.style.display = 'block';
-                nextLevelBtn.textContent = `レベル${gameState.currentLevel + 1}に挑戦！`;
-            } else if (gameState.currentLevel >= 5) {
-                nextLevelBtn.style.display = 'none';
+                if (gameState.currentLevel + 1 === MAX_GAME_LEVEL) {
+                    nextLevelBtn.textContent = 'レベルMAXに挑戦！';
+                } else {
+                    nextLevelBtn.textContent = `レベル${gameState.currentLevel + 1}に挑戦！`;
+                }
             } else {
                 nextLevelBtn.style.display = 'none';
             }
